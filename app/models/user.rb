@@ -3,8 +3,8 @@ class User < ApplicationRecord
     validates :username, uniqueness: { case_sensitive: false }
 
     def github_name
-        if self.github_access_token && self.github_access_token != "undefined"
-            self.new_octokit.user.name
+        if self.github_access_token
+            self.new_octokit.user.login
         else
             ""
         end
