@@ -1,6 +1,18 @@
 class Api::V1::UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create, :validate, :github, :githubAuth]
-  
+    skip_before_action :authorized, only: [:create, :validate, :github, :githubAuth, :index, :show]
+
+    def show
+      user = User.find(params["id"])
+      projects = user.collaborators.map{|collaborator| ProjectSerializer.new(collaborator.project)}
+      serializedUser = UserSerializer.new(user)
+      render json: {user: serializedUser, projects: projects}, status: :ok
+  end
+
+    def index
+      users = User.all.map{|user| UserSerializer.new(user)}
+      render json: {users: users}, status: :ok
+    end
+
     def create
       @user = User.create(user_params)
       if @user.valid?
@@ -36,30 +48,15 @@ class Api::V1::UsersController < ApplicationController
         render json: {errors: ["Could not auth github"], status: :not_acceptable}
       end
     end
-
-    def repos
-      if current_user.github_access_token
-        client = Octokit::Client.new(access_token: current_user.github_access_token)
-        repos = client.repos.map{|repo| repo.name}
-        @token = encode_token(user_id: @user.id)
-        render json: repos, status: :created
-      else
-        render json: {errors: ["Not auther with github"], status: :not_acceptable}
-      end
-    end
   
     private
   
     def user_params
-      params.require(:user).permit(:username, :password)
+      params.require(:user).permit(:username, :password, :bio)
     end
 
     def auth_hash
       request.env['omniauth.auth']
-    end
-
-    def github?
-
     end
   end
 
