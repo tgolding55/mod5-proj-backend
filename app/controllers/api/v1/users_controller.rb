@@ -8,6 +8,14 @@ class Api::V1::UsersController < ApplicationController
       render json: {user: serializedUser, projects: projects}, status: :ok
     end
 
+    def like
+      liked_user = User.find(params["like_id"])
+      to_like = liked_user.likees.find{|likee| likee.id === current_user.id}
+      !!to_like ? liked_user.likees.delete(to_like) : liked_user.likees << current_user 
+    
+      render json: liked_user.likees, status: :ok
+    end
+
     def dashboard
       projects = current_user.collaborators.map{|collaborator| ProjectSerializer.new(collaborator.project)}
       serializedUser = UserSerializer.new(current_user)

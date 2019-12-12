@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
         get '/me', to: 'users#dashboard'
+        post '/like', to: 'users#like'
         resources :users, only: [:create, :index, :show]
         get '/projects/:id/like', to: 'projects#like'
         resources :projects, only: [:index, :show]

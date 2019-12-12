@@ -8,6 +8,12 @@ class User < ApplicationRecord
     has_many :comment_likes
     validates :username, uniqueness: { case_sensitive: false }
 
+    has_many :liked_users, foreign_key: :liker_id, class_name: 'UserLike'
+    has_many :likees, through: :liked_users
+    
+    has_many :liking_users, foreign_key: :likee_id, class_name: "UserLike"
+    has_many :likers, through: :liking_users
+
     def github_name
         if github_access_token
             new_octokit.user.login
