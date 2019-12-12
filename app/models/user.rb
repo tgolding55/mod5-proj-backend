@@ -5,6 +5,7 @@ class User < ApplicationRecord
     has_many :project_comments
     has_many :commented, through: :project_comments, source: :project
     has_many :project_likes
+    has_many :comment_likes
     validates :username, uniqueness: { case_sensitive: false }
 
     def github_name

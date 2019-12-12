@@ -1,3 +1,4 @@
+CommentLike.delete_all
 ProjectComment.delete_all
 ProjectLike.delete_all
 Collaborator.delete_all
@@ -19,3 +20,6 @@ comment2 = ProjectComment.create(user_id: user2.id,project_id: project1.id, cont
 
 projectlike1 = ProjectLike.create(user_id: user1.id, project_id: project1.id)
 projectlike2 = ProjectLike.create(user_id: user2.id, project_id: project1.id)
+
+commentlike1 = CommentLike.create(user_id: user1.id, project_comment_id: comment1.id)
+commentlike2 = CommentLike.create(user_id: user2.id, project_comment_id: comment2.id)

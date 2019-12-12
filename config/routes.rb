@@ -7,7 +7,8 @@ Rails.application.routes.draw do
         get '/projects/:id/like', to: 'projects#like'
         resources :projects, only: [:index, :show]
         resources :project_comments, only: [:create]
-        resources :project_likes, only: [:create]          
+        resources :project_likes, only: [:create]     
+        resources :comment_likes, only: [:create]     
         post '/login', to: 'auth#create'
         get '/validate', to: 'users#validate'
         get '/githubAuth', to: 'users#githubAuth'
