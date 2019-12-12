@@ -6,7 +6,13 @@ class Api::V1::UsersController < ApplicationController
       projects = user.collaborators.map{|collaborator| ProjectSerializer.new(collaborator.project)}
       serializedUser = UserSerializer.new(user)
       render json: {user: serializedUser, projects: projects}, status: :ok
-  end
+    end
+
+    def dashboard
+      projects = current_user.collaborators.map{|collaborator| ProjectSerializer.new(collaborator.project)}
+      serializedUser = UserSerializer.new(current_user)
+      render json: {user: serializedUser, projects: projects}, status: :ok
+    end
 
     def index
       users = User.all.map{|user| UserSerializer.new(user)}
