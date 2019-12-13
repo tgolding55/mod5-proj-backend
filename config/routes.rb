@@ -5,6 +5,7 @@ Rails.application.routes.draw do
         get '/me', to: 'users#dashboard'
         post '/like', to: 'users#like'
         resources :users, only: [:create, :index, :show]
+        resources :collaborators, only: [:create]
         get '/projects/:id/like', to: 'projects#like'
         resources :projects, only: [:index, :show, :create]
         resources :project_comments, only: [:create]
