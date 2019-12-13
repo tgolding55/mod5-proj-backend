@@ -23,7 +23,7 @@ class User < ApplicationRecord
     end
 
     def github_linked
-        github_access_token
+        !!github_access_token
     end
 
     def new_octokit
