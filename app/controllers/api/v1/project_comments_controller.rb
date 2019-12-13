@@ -3,7 +3,7 @@ class Api::V1::ProjectCommentsController < ApplicationController
         comment = ProjectComment.new(project_comment_params)
         comment.user_id = current_user.id
         comment.save
-        render json: {comment: {content: comment.content,likes: comment.comment_likes, user: {username:comment.user.username, id: comment.user.id}}}
+        render json: {comment: {comment_id: comment.id, content: comment.content,likes: comment.comment_likes, user: {username:comment.user.username, id: comment.user.id}}}
     end
 
     private
