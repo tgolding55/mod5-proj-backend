@@ -31,7 +31,7 @@ class Api::V1::ProjectsController < ApplicationController
         project = Project.find(params["id"])
         user_liked = project.project_likes.find{|like| like.user_id == current_user.id}
         response = user_liked ? user_liked.destroy : ProjectLike.create(user_id: current_user.id, project_id: project.id)
-        render json: {user_like: response, liked: !!user_liked}
+        render json: {user_like: response, liked: !!user_liked}, status: :ok
     end
 
     private

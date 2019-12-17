@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
       @user = User.create(user_params)
       if @user.valid?
         @token = encode_token(user_id: @user.id)
-        render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
+        render json: { user: UserSerializer.new(@user), jwt: @token }, status: :ok
       else
         render json: { errors: ['failed to create user'] }, status: :not_acceptable
       end
@@ -40,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
     def validate
       if logged_in?
         @token = encode_token(user_id: @user.id)
-        render json: { user: UserSerializer.new(current_user), jwt: @token }, status: :created
+        render json: { user: UserSerializer.new(current_user), jwt: @token }, status: :ok
       else
         render json: {errors: ["Invalid token"]}, status: :not_acceptable
       end
@@ -57,7 +57,7 @@ class Api::V1::UsersController < ApplicationController
           current_user.update(github_access_token: github_auth)
         end
         @token = encode_token(user_id: @user.id)
-        render json: { user: UserSerializer.new(current_user), jwt: @token}, status: :created
+        render json: { user: UserSerializer.new(current_user), jwt: @token}, status: :ok
       else
         render json: {errors: ["Could not auth github"], status: :not_acceptable}
       end
