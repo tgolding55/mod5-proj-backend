@@ -7,8 +7,8 @@ Project.delete_all
 User.delete_all
 
 
-project1 = Project.create({title: "the test project", description: "The test projects descriptions", technologies_used: "Php, just php", collaborator_size_limit: 4, status: "in progress"})
-project2 = Project.create({title: "the second test project", description: "The second test projects descriptions", technologies_used: "Not Php, anything but php", collaborator_size_limit: 1, status: "completed"})
+project1 = Project.create({title: "the test project", description: "The test projects descriptions", technologies_used: "Php, just php", collaborator_size_limit: 4, status: "In Progress", github_link: 'https://github.com/tgolding55/tankgame', timeframe: 5})
+project2 = Project.create({title: "the second test project", description: "The second test projects descriptions", technologies_used: "Not Php, anything but php", collaborator_size_limit: 1, status: "Completed", github_link: 'https://github.com/tgolding55/hogwarts-react', timeframe: 2})
 
 user1 = User.create({username: "john", password: "123", bio:"I am john and this is a bio"})
 user2 = User.create({username: "tim", password: "123", bio:"I am not john, however, this is still a bio"})

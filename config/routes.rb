@@ -6,8 +6,9 @@ Rails.application.routes.draw do
         post '/like', to: 'users#like'
         resources :users, only: [:create, :index, :show]
         resources :collaborators, only: [:create]
+        patch '/projects/:id/repo', to: 'projects#repo'
         get '/projects/:id/like', to: 'projects#like'
-        resources :projects, only: [:index, :show, :create]
+        resources :projects, only: [:index, :show, :create, :edit, :update]
         resources :project_comments, only: [:create]
         resources :project_likes, only: [:create]     
         resources :comment_likes, only: [:create]     

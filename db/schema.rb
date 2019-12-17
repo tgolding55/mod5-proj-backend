@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 2019_12_12_162335) do
     t.text "technologies_used"
     t.integer "collaborator_size_limit"
     t.text "status"
+    t.text "github_link"
+    t.integer "timeframe"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
