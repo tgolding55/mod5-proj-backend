@@ -7,14 +7,15 @@ Project.delete_all
 User.delete_all
 
 
-project1 = Project.create({title: "the test project", description: "The test projects descriptions", technologies_used: "Php, just php", collaborator_size_limit: 4, status: "In Progress", github_link: 'https://github.com/tgolding55/tankgame', timeframe: 5})
-project2 = Project.create({title: "the second test project", description: "The second test projects descriptions", technologies_used: "Not Php, anything but php", collaborator_size_limit: 1, status: "Completed", github_link: 'https://github.com/tgolding55/hogwarts-react', timeframe: 2})
+project1 = Project.create({title: "Tank Game", description: "A tank game made with websockets", technologies_used: "Node.js and websockets", collaborator_size_limit: 1, status: "In Progress", github_link: 'https://github.com/tgolding55/tankgame', timeframe: 5})
+project2 = Project.create({title: "Hogwats practice challenge", description: "React lab for hogwarts", technologies_used: "React", collaborator_size_limit: 2, status: "Completed", github_link: 'https://github.com/tgolding55/hogwarts-react', timeframe: 2})
 
-user1 = User.create({username: "john", password: "123", bio:"I am john and this is a bio"})
-user2 = User.create({username: "tim", password: "123", bio:"I am not john, however, this is still a bio"})
+user1 = User.create({username: "david", password: "123", bio:"I am david and this is a bio"})
+user2 = User.create({username: "tim", password: "123", bio:"I am not david, however, this is still a bio"})
 
-collaborator1 = Collaborator.create(user_id: user1.id,project_id: project1.id, role:'lead')
-collaborator2 = Collaborator.create(user_id: user2.id,project_id: project1.id, role:'user')
+collaborator1 = Collaborator.create(user_id: user2.id,project_id: project1.id, role:'lead')
+collaborator2 = Collaborator.create(user_id: user1.id,project_id: project2.id, role:'lead')
+collaborator3 = Collaborator.create(user_id: user2.id,project_id: project2.id, role:'user')
 
 comment1 = ProjectComment.create(user_id: user1.id,project_id: project1.id, content:'THIS IS A COMMENT')
 comment2 = ProjectComment.create(user_id: user2.id,project_id: project1.id, content:'THIS IS ALSO A COMMENT')
