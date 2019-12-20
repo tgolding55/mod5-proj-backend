@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  username: MyString
-  password_digest: MyString
+  user: one
+  project: one
+  role: MyText
 
 two:
-  username: MyString
-  password_digest: MyString
+  user: two
+  project: two
+  role: MyText

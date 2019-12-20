@@ -1,3 +1,3 @@
 class UserSerializer < ActiveModel::Serializer
-    attributes :username, :github_name
+    attributes :id, :username, :github_linked, :bio, :likees
 end
