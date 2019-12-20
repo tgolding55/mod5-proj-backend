@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       namespace :v1 do
         get '/me', to: 'users#dashboard'
         post '/like', to: 'users#like'
+        post '/users/repos', to: 'users#repos'
         resources :users, only: [:create, :index, :show]
         resources :collaborators, only: [:create]
         patch '/projects/:id/repo', to: 'projects#repo'

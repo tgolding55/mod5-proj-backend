@@ -16,6 +16,18 @@ class Api::V1::UsersController < ApplicationController
       render json: liked_user.likees, status: :ok
     end
 
+    def repos
+      if current_user.github_linked
+        page = params[:page]
+        octokit = current_user.new_octokit
+        pages = (octokit.user.public_repos / 30.0).ceil
+        
+        repos = octokit.repos(nil, {page:page}).map{|repo| {title: repo.name, technologies_used: repo.language, description: repo.description, github_link: repo.html_url}}
+        
+        render json: {repos: repos, page_length: pages, page: page}, status: :ok
+      end
+    end
+
     def dashboard
       projects = current_user.collaborators.map{|collaborator| ProjectSerializer.new(collaborator.project)}
       serializedUser = UserSerializer.new(current_user)
