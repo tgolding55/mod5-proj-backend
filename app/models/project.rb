@@ -4,6 +4,7 @@ class Project < ApplicationRecord
     has_many :project_comments
     has_many :commenters, through: :project_comments, source: :user
     has_many :project_likes
+    has_many :project_messages
 
     def collaborator_size
         self.collaborators.size 

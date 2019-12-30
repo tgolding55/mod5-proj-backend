@@ -6,6 +6,8 @@ class User < ApplicationRecord
     has_many :commented, through: :project_comments, source: :project
     has_many :project_likes
     has_many :comment_likes
+    has_many :project_messages
+
     validates :username, uniqueness: { case_sensitive: false }
 
     has_many :liked_users, foreign_key: :liker_id, class_name: 'UserLike'

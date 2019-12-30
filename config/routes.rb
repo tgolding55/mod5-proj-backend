@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         get '/validate', to: 'users#validate'
         get '/githubAuth', to: 'users#githubAuth'
         post '/search', to: 'searchs#search'
+        resources :project_messages, only: [:show, :create]
       end
     end
     get '/auth/:provider/callback', to: 'api/v1/users#github'
