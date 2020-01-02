@@ -7,7 +7,7 @@ class Project < ApplicationRecord
     has_many :project_messages
 
     validates :title, presence: true, uniqueness: {case_sensitive: false}, length: {maximum: 50}
-    validates :description, presence: true
+    validates :description, presence: true, length: {maximum: 300}
     validates :technologies_used, presence: true, length: {maximum: 40}
     validates :collaborator_size_limit, presence: true, numericality: {greater_than: 0, less_than_or_equal_to: 10}
     validates :timeframe, presence: true, numericality: { greater_than: 0, less_than_or_equal_to: 20}
