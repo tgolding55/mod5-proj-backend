@@ -50,7 +50,7 @@ class Api::V1::ProjectsController < ApplicationController
                 Collaborator.create(project_id: project.id, user_id: current_user.id, role: "lead")
                 render json: {project: project}, status: :ok
             else
-                render json: {errors: ["Project invalid"]}, status: :not_acceptable
+                render json: {errors: project.errors.full_messages}, status: :not_acceptable
             end
         else    
             render json: {errors: ["Not authed with github!"]}, status: :not_authorized

@@ -10,8 +10,7 @@ class Project < ApplicationRecord
     validates :description, presence: true
     validates :technologies_used, presence: true, length: {maximum: 40}
     validates :collaborator_size_limit, presence: true, numericality: {greater_than: 0, less_than_or_equal_to: 10}
-    validates :status, presence: true
-    validates :timeframe, presence: true, numericality: { greater_than: 0, less_than: 20}
+    validates :timeframe, presence: true, numericality: { greater_than: 0, less_than_or_equal_to: 20}
 
     def collaborator_size
         self.collaborators.size 
