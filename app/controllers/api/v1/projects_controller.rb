@@ -18,8 +18,9 @@ class Api::V1::ProjectsController < ApplicationController
         if project.users.include?(current_user)
             collaborators = project.collaborators.map{ |collaborator| {id: collaborator.user.id, username: collaborator.user.username, github_linked: collaborator.user.github_linked, bio: collaborator.user.bio, likees: collaborator.user.likees, role: collaborator.role}}
             comments = project.project_comments.map{|comment| {comment_id:comment.id, content: comment.content, likes: comment.comment_likes, user: {username:comment.user.username, id: comment.user.id}}}.reverse
+            messages = project.project_messages.map{|message| {content: message.content, user: UserSerializer.new(message.user)}}
             serializedProject = ProjectSerializer.new(project)
-            render json: {project: serializedProject, collaborators: collaborators, comments: comments}, status: :ok
+            render json: {project: serializedProject, collaborators: collaborators, comments: comments, messages: messages}, status: :ok
         else
             render json: {errors: ["User not a collaborator"]}, status: :not_acceptable
         end
@@ -31,10 +32,11 @@ class Api::V1::ProjectsController < ApplicationController
             if project.update(project_params)
                 collaborators = project.collaborators.map{ |collaborator| {id: collaborator.user.id, username: collaborator.user.username, github_linked: collaborator.user.github_linked, bio: collaborator.user.bio, likees: collaborator.user.likees, role: collaborator.role}}
                 comments = project.project_comments.map{|comment| {comment_id:comment.id, content: comment.content, likes: comment.comment_likes, user: {username:comment.user.username, id: comment.user.id}}}.reverse
+                messages = project.project_messages.map{|message| {content: message.content, user: UserSerializer.new(message.user)}}
                 serializedProject = ProjectSerializer.new(project)
-                render json: {project: serializedProject, collaborators: collaborators, comments: comments}, status: :ok
+                render json: {project: serializedProject, collaborators: collaborators, comments: comments,messages: messages}, status: :ok
             else
-                render json: {erros: ["Could not update"]}, status: :not_acceptable
+                render json: {errors: ["Could not update"]}, status: :not_acceptable
             end
         else
             render json: {errors: ["User not a collaborator"]}, status: :not_acceptable
@@ -48,7 +50,7 @@ class Api::V1::ProjectsController < ApplicationController
                 Collaborator.create(project_id: project.id, user_id: current_user.id, role: "lead")
                 render json: {project: project}, status: :ok
             else
-                render json: {errors: ["Project invalid"]}, status: :not_acceptable
+                render json: {errors: project.errors.full_messages}, status: :not_acceptable
             end
         else    
             render json: {errors: ["Not authed with github!"]}, status: :not_authorized

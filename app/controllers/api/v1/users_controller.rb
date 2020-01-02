@@ -31,7 +31,9 @@ class Api::V1::UsersController < ApplicationController
     def dashboard
       projects = current_user.collaborators.map{|collaborator| ProjectSerializer.new(collaborator.project)}
       serializedUser = UserSerializer.new(current_user)
-      render json: {user: serializedUser, projects: projects}, status: :ok
+      liked_projects = current_user.project_likes.map{|projectlike| ProjectSerializer.new(projectlike.project)}
+      liked_users = current_user.liked_users.map{|liked_user| UserSerializer.new(liked_user.liker)}
+      render json: {user: serializedUser, projects: projects, liked_projects: liked_projects, liked_users: liked_users}, status: :ok
     end
 
     def index
@@ -40,12 +42,17 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def create
-      @user = User.create(user_params)
-      if @user.valid?
-        @token = encode_token(user_id: @user.id)
-        render json: { user: UserSerializer.new(@user), jwt: @token }, status: :ok
+      
+      if !User.find_by({username:  params[:user][:username]})
+        @user = User.create(user_params)
+        if @user.valid?
+          @token = encode_token(user_id: @user.id)
+          render json: { user: UserSerializer.new(@user), jwt: @token }, status: :ok
+        else
+          render json: { errors: ['Failed to create user'] }, status: :not_acceptable
+        end
       else
-        render json: { errors: ['failed to create user'] }, status: :not_acceptable
+        render json: { errors: ['Username taken']}, status: :not_acceptable
       end
     end
 

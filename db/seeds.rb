@@ -1,6 +1,7 @@
 CommentLike.delete_all
 ProjectComment.delete_all
 ProjectLike.delete_all
+ProjectMessage.delete_all
 UserLike.delete_all
 Collaborator.delete_all
 Project.delete_all
@@ -32,4 +33,6 @@ commentlike1 = CommentLike.create(user_id: user1.id, project_comment_id: comment
 commentlike2 = CommentLike.create(user_id: user2.id, project_comment_id: comment2.id)
 
 userlike1 = user1.likees << user2
+
+projectMessage = ProjectMessage.create(user_id: user1.id, project_id: project1.id, content: "This is message hello")
 
