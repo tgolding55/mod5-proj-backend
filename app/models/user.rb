@@ -9,7 +9,7 @@ class User < ApplicationRecord
     has_many :project_messages
 
     validates :username, presence: true, uniqueness: { case_sensitive: false }, length: {maximum: 20}
-    validates :bio, presence: true
+    validates :bio, presence: true, length: {maximum: 300}
 
     has_many :liked_users, foreign_key: :liker_id, class_name: 'UserLike'
     has_many :likees, through: :liked_users

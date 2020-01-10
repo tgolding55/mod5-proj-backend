@@ -28,12 +28,26 @@ class Api::V1::UsersController < ApplicationController
       end
     end
 
+    def update 
+      if current_user.id === params["user"]["id"]
+        if current_user.update(user_params)
+          serializedUser = UserSerializer.new(current_user)
+          render json: {user: serializedUser}, status: :ok
+        else
+          render json: {errors: ["Could not update"]}, status: :not_acceptable
+        end
+      else
+        render json: [errors: "You cannot edit this user!"], status: :not_acceptable
+      end
+    end
+
     def dashboard
       projects = current_user.collaborators.map{|collaborator| ProjectSerializer.new(collaborator.project)}
       serializedUser = UserSerializer.new(current_user)
       liked_projects = current_user.project_likes.map{|projectlike| ProjectSerializer.new(projectlike.project)}
-      liked_users = current_user.liked_users.map{|liked_user| UserSerializer.new(liked_user.liker)}
-      render json: {user: serializedUser, projects: projects, liked_projects: liked_projects, liked_users: liked_users}, status: :ok
+      liked_users = current_user.liking_users.map{|liked_user| UserSerializer.new(liked_user.liker)}
+      liking_users = current_user.liked_users.map{|liked_user| UserSerializer.new(liked_user.liker)}
+      render json: {user: serializedUser, projects: projects, liked_projects: liked_projects, liked_users: liked_users, liking_users: liking_users}, status: :ok
     end
 
     def index

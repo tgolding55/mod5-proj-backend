@@ -5,7 +5,7 @@ Rails.application.routes.draw do
         get '/me', to: 'users#dashboard'
         post '/like', to: 'users#like'
         post '/users/repos', to: 'users#repos'
-        resources :users, only: [:create, :index, :show]
+        resources :users, only: [:create, :index, :show, :update]
         resources :collaborators, only: [:create]
         patch '/projects/:id/repo', to: 'projects#repo'
         get '/projects/:id/like', to: 'projects#like'
