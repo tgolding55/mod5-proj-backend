@@ -80,7 +80,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def github
-      redirect_to "http://http://209.97.189.241:5000/auth/response?github_auth=" + auth_hash.credentials.token
+      redirect_to "http://209.97.189.241:5000/auth/response?github_auth=" + auth_hash.credentials.token
     end
 
     def githubAuth
