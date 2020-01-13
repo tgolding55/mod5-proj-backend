@@ -13,13 +13,17 @@
 #
 # Configure Using Gemfile
 # gem 'pg'
-#
+
 default: &default
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
+  database: githubtest_back2_development
+  host: localhost
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: deploy
+  password: deploy
 
 development:
   <<: *default
@@ -74,7 +78,12 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: githubtest_back2_production
-  username: githubtest_back2
-  password: <%= ENV['GITHUBTEST_BACK2_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  database: githubtest_back2_development
+  host: localhost
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: deploy
+  password: deploy
